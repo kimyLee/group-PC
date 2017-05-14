@@ -1,0 +1,68 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "step": 0,
+      "title": "待规划",
+      "cards": [
+        {
+          "id": 1,
+          "step": 0,
+          "title": "我是任务一"
+        },
+        {
+          "id": 2,
+          "step": 0,
+          "title": "许泽珊好可爱"
+        },
+        {
+          "id": 3,
+          "step": 0,
+          "title": "许泽珊好可爱"
+        },
+        {
+          "id": 4,
+          "step": 0,
+          "title": "许泽珊好可爱"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "step": 1,
+      "title": "待开发",
+      "cards": [
+        {
+          "id": 5,
+          "step": 0,
+          "title": "我是任务一"
+        },
+        {
+          "id": 6,
+          "step": 0,
+          "title": "许泽珊好可爱"
+        },
+        {
+          "id": 7,
+          "step": 0,
+          "title": "许泽珊好可爱"
+        },
+        {
+          "id": 8,
+          "step": 0,
+          "title": "许泽珊好可爱"
+        }
+      ]
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

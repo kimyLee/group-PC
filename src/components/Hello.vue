@@ -41,6 +41,7 @@
 
 <script>
   import mySelect from './myDropDown.vue'
+  import api from '@/services/home'
 
   export default {
     name: 'hello',
@@ -63,12 +64,13 @@
         this.slide = val
       },
       getData () {
-        setTimeout(() => {
-          this.arr = this.arr.map((e) => {
-            e.id = e.id + 3
-            return e
+        api.getCard()
+          .then((data) => {
+            console.log(data)
           })
-        }, 50)
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
     components: {
@@ -82,19 +84,20 @@
     .mySelect {
         margin-left: -70px;
     }
+
     .el-icon-arrow-down {
         transition: all .3s ease;
         transform: rotate(-90deg);
 
     }
+
     .el-icon-arrow-down.slide {
         transform: rotate(0deg);
     }
+
     h1, h2 {
         font-weight: normal;
     }
-
-
 
     a {
         color: #42b983;
