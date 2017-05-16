@@ -5,13 +5,18 @@
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  export default {
+    name: 'app'
+  }
 </script>
 
 <style>
-#app {
-  font-family: '微软雅黑', Helvetica, Arial, sans-serif;
-}
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  #app {
+
+    font-family: '微软雅黑', Helvetica, Arial, sans-serif;
+  }
 </style>
