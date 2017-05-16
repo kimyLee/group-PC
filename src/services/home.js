@@ -7,5 +7,7 @@
 import xhr from './index'
 
 export default {
-  getCard: xhr.get.bind(null, '/posts')
+  // 目前先单列展示，后续会整个流程合并
+  getCard: xhr.get.bind(null, '/comments'),
+  addCard: xhr.post.bind(null, '/comments')
 }

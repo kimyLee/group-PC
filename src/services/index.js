@@ -1,8 +1,9 @@
 /**
- * Created by duoyi on 2017/3/29.
+ * Created by kimmy on 2017/3/29.
+ * 我还是倾向于api 统一管理，万一多处用到了呢
  */
 import axios from 'axios'
-
+// todo: 开发服上这样配，做映射，打包上线可能删掉
 const domain = location.host.indexOf('localhost') >= 0 ? '/api' : 'http://localhost:8080'
 
 // 统一处理
@@ -16,7 +17,7 @@ function handleAll (data) {
   return Promise.resolve(data.data)
 }
 
-function get (url, query = {t: new Date().getTime()}) {
+function get (url, query) {
   return axios.get(domain + url, {params: query}).then(handleAll)
 }
 function post (url, query) {
@@ -34,6 +35,7 @@ function del (url, query) {
   }).then(handleAll)
 }
 
+// 这里少了form 提交的处理，查api, 嵌入到vue即可
 export default {
   get,
   post,
