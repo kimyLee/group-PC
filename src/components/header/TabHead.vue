@@ -19,6 +19,6 @@
     height:40px;
     line-height:40px;
     padding-left: 20px;
-    background-color: #eef1f6;
+    background-color: #f1f1f1;
   }
 </style>
