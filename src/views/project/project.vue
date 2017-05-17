@@ -1,6 +1,7 @@
 <template>
   <div class="project">
     <app-header></app-header>
+    <tab-header></tab-header>
     <span @click="getData" class="red">sass实例</span>
     <br>
     <el-button type="text" @click="isOpen = true">打开侧边栏</el-button>
@@ -10,6 +11,10 @@
         helloword
       </div>
     </right-side>
+    <div class="task-part">
+      <draggable-task v-for="task in tasks" :task="task"></draggable-task>
+      <div>点击这里可以实现添加任务模块</div>
+    </div>
   </div>
 </template>
 
@@ -17,14 +22,17 @@
   import api from '@/services/home'
   import appHeader from '@/components/header/header.vue'
   import rightSide from '@/components/rightSide.vue'
+  import tabHeader from '@/components/header/TabHead.vue'
+  import draggableTask from '@/components/DraggableTask.vue'
 
   export default {
     data () {
       return {
-        isOpen: false   // 是否打开侧边栏
+        isOpen: false,   // 是否打开侧边栏
+        tasks: null       // 从后台获取到的任务
       }
     },
-    components: { appHeader, rightSide },
+    components: {appHeader, rightSide, tabHeader, draggableTask},
     methods: {
       close () {
         this.isOpen = false
@@ -39,6 +47,14 @@
             console.log(err)
           })
       }
+    },
+    mounted () {
+      const self = this
+      api.gettask()
+        .then((data) => {
+          self.tasks = data
+          console.log(data)
+        })
     }
   }
 </script>
@@ -55,6 +71,11 @@
     font-size: 14px;
     .red {
       color: #ccc;
+    }
+    .task-part {
+      display: flex;
+      padding:20px;
+      height:100%;
     }
   }
 </style>

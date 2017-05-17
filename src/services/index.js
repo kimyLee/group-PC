@@ -4,7 +4,7 @@
  */
 import axios from 'axios'
 // todo: 开发服上这样配，做映射，打包上线可能删掉
-const domain = location.host.indexOf('localhost') >= 0 ? '/api' : 'http://localhost:8080'
+const domain = location.host.indexOf('localhost') >= 0 ? '/api' : 'http://localhost:3000'
 
 // 统一处理
 function handleAll (data) {
