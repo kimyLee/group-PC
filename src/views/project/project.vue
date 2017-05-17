@@ -12,7 +12,7 @@
       </div>
     </right-side>
     <div class="task-part">
-      <draggable-task v-for="task in tasks" :task="task"></draggable-task>
+      <draggable-task v-for="task in tasks" :task="task" ></draggable-task>
       <div>点击这里可以实现添加任务模块</div>
     </div>
   </div>
@@ -63,7 +63,6 @@
   /* 用sass 好处，能层层嵌套写，一般一个模块页面定义一个唯一的类，比如project，其他类在project里面，就不怕污染 */
   /* 而且v-cli帮我们打包时候做了兼容处理，-webkit-什么前缀就不用写了 */
   .project {
-    background-color: #f1f1f1;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -74,8 +73,7 @@
     }
     .task-part {
       display: flex;
-      padding:20px;
-      height:100%;
+      height:calc(100vh - 130px);
     }
   }
 </style>
