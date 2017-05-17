@@ -68,6 +68,7 @@
     height: 100%;
     color: #444;
     font-size: 14px;
+    overflow: hidden;
     .red {
       color: #ccc;
     }
@@ -77,5 +78,19 @@
       padding: 5px;
       box-sizing: border-box;
     }
+  }
+  .test {
+    /*position: relative;*/
+    background: red;
+    width:100px;
+    height:100%;
+  }
+  .test1{
+    /*position: absolute;*/
+    background: blue;
+    width:20px;
+    height:100%;
+    /*left:10px;*/
+    /*top:5px;*/
   }
 </style>
