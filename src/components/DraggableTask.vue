@@ -177,7 +177,7 @@
       opacity: 1!important;
       .card {
         box-shadow: 6px 6px 15px #999;
-        transform: rotate(3deg) translateZ(0)!important;
+        transform: rotate(3deg) translateZ(0);
       }
     }
     .sortable-ghost {
