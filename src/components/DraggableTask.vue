@@ -87,6 +87,21 @@
       max-height: calc(100% - 80px);
       overflow: auto;
       transition: all ease-out .4s;
+      &::-webkit-scrollbar{
+        width: 8px;
+        height: 4px;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #ddd;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 2px;
+      }
+      &::-webkit-scrollbar-button {
+        background-color: #888;
+        display: none;
+      }
     }
     /*分块任务分区模块*/
     .card {
