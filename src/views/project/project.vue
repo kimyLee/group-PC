@@ -2,15 +2,15 @@
   <div class="project">
     <app-header></app-header>
     <tab-header></tab-header>
-    <span @click="getData" class="red">sass实例</span>
-    <br>
-    <el-button type="text" @click="isOpen = true">打开侧边栏</el-button>
-    <right-side :is-open="isOpen" @close="close" width="500">
-      <div slot="head">标题</div>
-      <div>
-        helloword
-      </div>
-    </right-side>
+    <!--<span @click="getData" class="red">sass实例</span>-->
+    <!--<br>-->
+    <!--<el-button type="text" @click="isOpen = true">打开侧边栏</el-button>-->
+    <!--<right-side :is-open="isOpen" @close="close" width="500">-->
+      <!--<div slot="head">标题</div>-->
+      <!--<div>-->
+        <!--helloword-->
+      <!--</div>-->
+    <!--</right-side>-->
     <div class="task-part">
       <draggable-task v-for="task in tasks" :task="task" ></draggable-task>
       <div>点击这里可以实现添加任务模块</div>
@@ -68,12 +68,29 @@
     height: 100%;
     color: #444;
     font-size: 14px;
+    overflow: hidden;
     .red {
       color: #ccc;
     }
     .task-part {
       display: flex;
-      height:calc(100vh - 130px);
+      height:calc(100% - 80px);
+      padding: 5px;
+      box-sizing: border-box;
     }
+  }
+  .test {
+    /*position: relative;*/
+    background: red;
+    width:100px;
+    height:100%;
+  }
+  .test1{
+    /*position: absolute;*/
+    background: blue;
+    width:20px;
+    height:100%;
+    /*left:10px;*/
+    /*top:5px;*/
   }
 </style>
