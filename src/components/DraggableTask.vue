@@ -4,7 +4,7 @@
       <span class="title">{{task.title}} · {{task.cards.length}}</span>
     </div>
     <!--项目任务模块-->
-    <div class="draggable-part" v-bind:class="{'draggable-part-show':editpartShow}">
+    <div class="draggable-part" v-bind:class="{'draggable-part-show':editpartShow}" ref="DraggablePart">
       <draggable :options="options" v-model="task.cards"  style="height: 100%;">
         <div v-for="taskcard in task.cards" :id="taskcard.id">
           <div  class="card">
@@ -56,17 +56,25 @@
       addTask,
       taskEditor
     },
+    watch: {
+//      实现添加任务的时候滚动条自动滚动效果
+      editpartShow: function () {
+        this.$nextTick(() => {
+          var DraggablePart = this.$refs.DraggablePart
+          DraggablePart.scrollTop = DraggablePart.scrollHeight
+        })
+      }
+    },
     methods: {
       Showeditor: function () {
         this.editpartShow = true
-        console.log('999')
       }
     }
   }
 </script>
 <style lang="scss" rel="stylesheet/scss">
   .draggable {
-    width:250px;
+    width:300px;
     margin:5px;
     background-color: #f1f1f1;
     border-radius: 5px;
@@ -78,6 +86,7 @@
     .draggable-part {
       max-height: calc(100% - 80px);
       overflow: auto;
+      transition: all ease-out .4s;
     }
     /*分块任务分区模块*/
     .card {
@@ -132,6 +141,7 @@
             border-radius: 99em;
             background-color: gold;
             margin-left: 10px;
+            color: white;
           }
         }
         .task-deadline {

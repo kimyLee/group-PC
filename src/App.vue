@@ -22,4 +22,7 @@
   textarea input button {
     outline:none;
   }
+  a {
+    text-decoration: none;
+  }
 </style>
