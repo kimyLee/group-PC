@@ -3,18 +3,23 @@
     <div class="task-title">
       <span class="title">{{task.title}} · {{task.cards.length}}</span>
     </div>
+    <!--项目任务模块-->
     <div class="draggable-part" v-bind:class="{'draggable-part-show':editpartShow}">
       <draggable :options="options" v-model="task.cards"  style="height: 100%;">
         <div v-for="taskcard in task.cards" :id="taskcard.id">
           <div  class="card">
             <div class="hover-mask"></div>
+            <!--任务紧急程度icon模块-->
             <div class="icon-part"><i class="fa fa-star important" aria-hidden="true"></i></div>
+            <!--任务内容模块-->
             <div class="content-part">
               <div class="task-head">
                 <span class="task-infomation" :title=taskcard.title>{{taskcard.title}}</span>
                 <span class="head-portrait">{{task.host.substring(0,3)}}</span>
               </div>
+              <!--截止日期模块-->
             <div class="task-deadline">5月13日截止</div>
+              <!--任务信息（开发人员任务状态模块）-->
             <div class="task-info">
               <span class="responser"><i class="tab-label"></i>{{taskcard.responser}}</span>
               <span class="status">等待开发</span>
@@ -22,29 +27,18 @@
           </div>
         </div>
         </div>
-        <!--添加任务编辑模块-->
-        <div class="edittask" v-bind:class="{'editpart-show':editpartShow}">
-          <div class="text-part">
-            <textarea name="task" id=""></textarea>
-            <div class="responser">参与者</div>
-          </div>
-          <div class="add-responser">参与者</div>
-          <div class="more">更多</div>
-          <div class="control-btn">
-            <span class="private-set">隐私模式</span>
-            <span class="submit-btn"><button>创建</button></span>
-          </div>
-        </div>
+        <!--任务编辑模块-->
+        <task-editor :isShow = "editpartShow"></task-editor>
       </draggable>
     </div>
-      <div class="add-task" @click="addtask" :class="{'ishide':editpartShow}">
-        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-        添加任务
-      </div>
+    <!--添加任务模块-->
+    <add-task  v-on:addtask="Showeditor"></add-task>
   </div>
 </template>
 <script>
   import draggable from 'vuedraggable'
+  import addTask from '@/views/project/addtask.vue'
+  import taskEditor from '@/views/project/taskEditor.vue'
   export default {
     props: ['task'],
     data () {
@@ -58,11 +52,14 @@
       }
     },
     components: {
-      draggable
+      draggable,
+      addTask,
+      taskEditor
     },
     methods: {
-      addtask () {
+      Showeditor: function () {
         this.editpartShow = true
+        console.log('999')
       }
     }
   }
@@ -82,6 +79,7 @@
       max-height: calc(100% - 80px);
       overflow: auto;
     }
+    /*分块任务分区模块*/
     .card {
       display: flex;
       position: relative;
@@ -169,43 +167,11 @@
         }
       }
     }
-    .add-task {
-      cursor: pointer;
-      padding-left: 20px;
-      height: 40px;
-      line-height: 40px;
-      color: #50bfff;
-      &:hover {
-        background: #c0ccda;
-        opacity: 0.9;
-      }
-    }
-    .edittask {
-      display: none;
-      background-color: white;
-      padding: 15px;
-      margin: 5px;
-      border-radius: 4px;
-      .text-part {
-        textarea {
-          width: 100%;
-          height: 50px;
-          padding:0px;
-        }
-      }
-    }
     /*点击添加任务之后的样式显示，要同时考虑到内联滚动条的滚动以及底部的显示，需要再跟进提高一下*/
-    .editpart-show {
-      display: block;
-      /*max-height:200px;*/
-      transition: all .4s ease;
-    }
-    .ishide {
-      display: none;
-    }
     .draggable-part-show {
       max-height: calc(100% - 40px)!important;
     }
+
     /*拖拽样式显示*/
     .sortable-fallback {
       opacity: 1!important;

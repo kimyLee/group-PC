@@ -19,4 +19,7 @@
 
     font-family: '微软雅黑', Helvetica, Arial, sans-serif;
   }
+  textarea input button {
+    outline:none;
+  }
 </style>
