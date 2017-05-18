@@ -1,7 +1,7 @@
 <template>
   <div class="draggable">
     <div class="task-title">{{task.title}}</div>
-    <draggable :options="options" v-model="task.cards">
+    <draggable :options="options" v-model="task.cards" style="min-height: 100px">
       <div v-for="taskcard in task.cards" :id="taskcard.id">
       <div  class="card">{{taskcard.title}}</div>
       </div>
@@ -51,7 +51,7 @@
       opacity: 1!important;
       .card {
         box-shadow: 6px 6px 15px #999;
-        transform: rotate(3deg) translateZ(0)!important;
+        transform: rotate(3deg) translateZ(0);
       }
     }
     .sortable-ghost {
