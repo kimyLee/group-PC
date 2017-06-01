@@ -17,13 +17,16 @@
       </div>
       <div class="bd-bt more">*** 更多</div>
       <div class="control-btn">
+        <!--隐私模式及创建-->
         <div class="private-icon">
-          <span class=" hover-active"><i class="fa fa-lock fa-2x" aria-hidden="true"></i>
-            <span>隐私模式</span>
+          <span class=" hover-active">
+            <i class="fa fa-lock fa-2x" aria-hidden="true" ></i>
+            <span class="private">隐私模式</span>
           </span>
-          <span class="private-info">所有成员可见</span>
+          <div class="submit-btn"><button>创建</button></div>
         </div>
-        <div class="submit-btn"><button>创建</button></div>
+        <div class="private-info">所有成员可见</div>
+
       </div>
     </div>
   </form>
@@ -99,34 +102,55 @@
       padding:15px 0px;
     }
     .control-btn {
-      height:40px;
+
       padding:10px 0px;
-      display: flex;
+      /*display: flex;*/
+      .hover-active {
+        flex: 1;
+        height: 40px;
+        vertical-align: middle;
+        .fa{
+          font-size: 16px;
+        }
+        .fa , .private{
+          vertical-align: middle;
+        }
+      }
+      .hover-active:after {
+        display: inline-block;
+        content: '';
+        height: 100%;
+        width: 0;
+        vertical-align: middle;
+      }
       .hover-active:hover {
         cursor: pointer;
         color: #3da8f5;
       }
       .private-icon {
-        flex:1;
-        padding-right: 10px;
+        width: 100%;
+        display: flex;
       }
       .private-info {
         display: inline-block;
-        padding-top: 5px;
-        padding-left:20px;
         color: #A6A6A6;
       }
       .submit-btn{
-        height:inherit;
+        display: inline-block;
+        height:25px;
         color: #000;
-        width:70px;
+
+        line-height: 40px;
+
         button {
-          height: inherit;
-          width: inherit;
+          height: 25px;
+
           background: #3da8f5;
-          border-color: #3da8f5;
           color: white;
           border-radius: 4px;
+          box-shadow: none;
+          border: none;
+          padding: 3px 11px;
         }
       }
     }

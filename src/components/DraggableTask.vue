@@ -87,6 +87,7 @@
       max-height: calc(100% - 80px);
       overflow: auto;
       transition: all ease-out .4s;
+      /*修改滚动条的样式*/
       &::-webkit-scrollbar{
         width: 8px;
         height: 4px;
