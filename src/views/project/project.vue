@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <app-header></app-header>
+    <app-header :info="info"></app-header>
     <tab-header></tab-header>
     <!--<span @click="getData" class="red">sass实例</span>-->
     <!--<br>-->
@@ -12,24 +12,27 @@
       <!--</div>-->
     <!--</right-side>-->
     <div class="task-part">
-      <draggable-task v-for="task in tasks" :task="task" ></draggable-task>
+      <draggable-task v-for="(task,index) in tasks" :task="task" :index="index"
+                      @updatetask="gettask"  :taskflow="taskflow" :info="info"></draggable-task>
       <div>点击这里可以实现添加任务模块</div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import api from '@/services/home'
+  import api from '@/services/user'
   import appHeader from '@/components/header/header.vue'
   import rightSide from '@/components/rightSide.vue'
   import tabHeader from '@/components/header/TabHead.vue'
   import draggableTask from '@/components/DraggableTask.vue'
 
   export default {
+    props: ['info'],
     data () {
       return {
         isOpen: false,   // 是否打开侧边栏
-        tasks: null       // 从后台获取到的任务
+        tasks: null,  // 从后台获取到的任务
+        taskflow: {}
       }
     },
     components: {appHeader, rightSide, tabHeader, draggableTask},
@@ -38,23 +41,28 @@
         this.isOpen = false
         // todo: 其他操作
       },
-      getData () {
-        api.getCard()
+      gettask () {
+        const self = this
+        api.gettask()
           .then((data) => {
-            console.log(data)
+            self.tasks = data.data
           })
           .catch((err) => {
             console.log(err)
           })
+        api.getflow()
+          .then((data) => {
+            //  这里貌似有点问题 就是这里是用data.data才能获取到数据
+            for (var i = 0; i < data.data.length; i++) {
+              self.taskflow[data.data[i].step] = data.data[i].stepname
+            }
+            console.log(self.taskflow)
+            console.log(self.taskflow['0'])
+          })
       }
     },
     mounted () {
-      const self = this
-      api.gettask()
-        .then((data) => {
-          self.tasks = data
-          console.log(data)
-        })
+      this.gettask()
     }
   }
 </script>

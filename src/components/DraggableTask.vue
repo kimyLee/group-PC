@@ -1,46 +1,48 @@
 <template>
   <div class="draggable">
     <div class="task-title">
-      <span class="title">{{task.title}} · {{task.cards.length}}</span>
+      <span class="title"> {{taskflow[index]}}</span>
+      <span class="title">· {{task.length}}</span>
     </div>
     <!--项目任务模块-->
-    <div class="draggable-part" v-bind:class="{'draggable-part-show':editpartShow}" ref="DraggablePart">
+    <div class="draggable-part"  ref="DraggablePart">
       <draggable :options="options" v-model="task.cards"  style="height: 100%;">
-        <div v-for="taskcard in task.cards" :id="taskcard.id">
+        <div v-for="taskcard in task" :id="taskcard.id">
           <div  class="card">
             <div class="hover-mask"></div>
             <!--任务紧急程度icon模块-->
-            <div class="icon-part"><i class="fa fa-star important" aria-hidden="true"></i></div>
+            <div class="icon-part"><el-checkbox v-model="checked" class="important"></el-checkbox></div>
             <!--任务内容模块-->
             <div class="content-part">
               <div class="task-head">
                 <span class="task-infomation" :title=taskcard.title>{{taskcard.title}}</span>
-                <span class="head-portrait">{{task.host.substring(0,3)}}</span>
+                <span class="head-portrait">{{taskcard.creator}}</span>
               </div>
               <!--截止日期模块-->
-            <div class="task-deadline">5月13日截止</div>
+            <div class="task-deadline">{{taskcard.deadline}}截止</div>
               <!--任务信息（开发人员任务状态模块）-->
             <div class="task-info">
-              <span class="responser"><i class="tab-label"></i>{{taskcard.responser}}</span>
-              <span class="status">等待开发</span>
+              <span class="responser"><i class="tab-label"></i>{{taskcard.member}}</span>
+              <span class="status">{{taskcard.stepname}}</span>
             </div>
           </div>
         </div>
         </div>
         <!--任务编辑模块-->
-        <task-editor :isShow = "editpartShow"></task-editor>
+        <task-editor :index="index" @updatetask="updatetask" :info="info"></task-editor>
       </draggable>
     </div>
     <!--添加任务模块-->
-    <add-task  v-on:addtask="Showeditor"></add-task>
+    <add-task  @addtask="Showeditorscroll" :index="index"></add-task>
   </div>
 </template>
 <script>
+//  import api from '@/services/user'
   import draggable from 'vuedraggable'
   import addTask from '@/views/project/addtask.vue'
   import taskEditor from '@/views/project/taskEditor.vue'
   export default {
-    props: ['task'],
+    props: ['task', 'index', 'taskflow', 'info'],
     data () {
       return {
         options: {
@@ -48,7 +50,7 @@
           animation: 100,
           forceFallback: true
         },
-        editpartShow: false
+        checked: false
       }
     },
     components: {
@@ -56,18 +58,18 @@
       addTask,
       taskEditor
     },
-    watch: {
+    methods: {
 //      实现添加任务的时候滚动条自动滚动效果
-      editpartShow: function () {
+      Showeditorscroll: function () {
+        const self = this
         this.$nextTick(() => {
           var DraggablePart = this.$refs.DraggablePart
           DraggablePart.scrollTop = DraggablePart.scrollHeight
         })
-      }
-    },
-    methods: {
-      Showeditor: function () {
-        this.editpartShow = true
+        console.log(self.index)
+      },
+      updatetask () {
+        this.$emit('updatetask')
       }
     }
   }
@@ -130,8 +132,7 @@
       .icon-part {
         width:20px;
         height:20px;
-        margin: 14px 0px 0px 10px;
-        color: gold;
+        margin: 14px 8px 0px 10px;
       }
       .content-part {
         width:140px;
@@ -155,7 +156,6 @@
             width:30px;
             text-align: center;
             border-radius: 99em;
-            background-color: gold;
             margin-left: 10px;
             color: white;
           }

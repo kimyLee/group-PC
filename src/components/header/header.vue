@@ -1,28 +1,32 @@
 <template>
   <div class="header">
-    <span class="more-btn">
-      <my-drop-down>
-        <span slot="header"><i class="el-icon-setting"></i></span>
-        <li>个人设置</li>
-        <li>消息中心</li>
-      </my-drop-down>
-    </span>
-    <span class="header-item">然后，哈姆太郎成了我女神</span>
-    <span class="header-item search-panel" @click.stop="toggleInput()">
-      <el-input
-        placeholder="在全部中搜索"
-        icon="search"
-        v-model="input"
-        @blur="toggleInput(true)"
-        >
-      </el-input>
-    </span>
+    <!--<div class="left-part">-->
+      <span class="more-btn">
+        <my-drop-down>
+          <span slot="header"><i class="el-icon-setting"></i></span>
+          <li>个人设置</li>
+          <li>消息中心</li>
+        </my-drop-down>
+      </span>
+      <span class="header-item">然后，哈姆太郎成了我女神 </span>
+      <span class="header-item search-panel" @click.stop="toggleInput()">
+        <el-input
+          placeholder="在全部中搜索"
+          icon="search"
+          v-model="input"
+          @blur="toggleInput(true)"
+          >
+        </el-input>
+      </span>
+    <!--</div>-->
+    <span class="login-user">{{info.userName}}</span>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import myDropDown from '../myDropDown.vue'
   export default {
+    props: ['info'],
     data () {
       return {
         input: '',
@@ -43,10 +47,20 @@
 
 <style lang="scss" rel="stylesheet/scss">
   .header {
+    /*display: flex;*/
+    justify-content: space-between;
     height: 40px;
-
     padding: 0 20px;
     background-color: #fff;
+    .login-user {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      float: right;
+      cursor: pointer;
+      /*vertical-align:top;*/
+      /*flex:1;*/
+    }
     &:after{
       display: inline-block;
       content: '';

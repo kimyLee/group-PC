@@ -1,12 +1,44 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view @getinfo="getInfo" :info="info"></router-view>
   </div>
 </template>
 
 <script>
+  import api from '@/services/user'
   export default {
-    name: 'app'
+    data () {
+      return {
+        info: {}
+      }
+    },
+    name: 'app',
+    created () {
+      this.checkLogin()
+    },
+    watch: {
+      // $route: 'checkLogin'
+    },
+    methods: {
+      // 获取用户基本信息
+      getInfo (info) {
+        console.log('xinxi', info)
+        this.info = Object.assign({}, info)
+        console.log(this.info)
+      },
+      checkLogin () {
+        api.checkLogin()
+          .then((data) => {
+            console.log(data)
+            this.info = {userName: data.data.userName}
+            this.$router.replace({path: '/project'})
+          })
+          .catch((err) => {
+            this.$router.replace({path: '/'})
+            console.log(err)
+          })
+      }
+    }
   }
 </script>
 

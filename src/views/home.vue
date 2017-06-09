@@ -1,15 +1,21 @@
 <template>
 <div class="homepage">
   <div class="headerpart">
-    <span class="title">Kimmy和Kath的装逼之路</span>
+    <span class="title">Katherine和kimmy的装逼之路</span>
     <router-link to="/login" class="login">登陆</router-link>
     <router-link to="/signup" class="signup">免费注册</router-link>
   </div>
 </div>
 </template>
 <script>
+  import user from '../services/user.js'
   export default {
-
+    mounted () {
+      user.getuserinfo()
+        .then((data) => {
+          console.log(data)
+        })
+    }
   }
 </script>
 <style lang="scss" rel="stylesheet/scss">

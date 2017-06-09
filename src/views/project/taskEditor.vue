@@ -2,20 +2,38 @@
   <form action="" class="task-editor">
     <div class="edittask" v-bind:class="{'editpart-show':isShow}">
       <div class="bd-bt text-part">
-        <textarea name="task" id="" placeholder="任务内容"></textarea>
+        <textarea name="task" id="" placeholder="任务内容" v-model="tasktitle"></textarea>
         <div class="responser">
-          <span class="head-portait">头像</span>
-          <span class="responser-name"><a href="">许泽珊</a></span>
+          <span class="head-portait"></span>
+          <span class="responser-name">{{info.userName}}</span>
         </div>
       </div>
       <div class="bd-bt  add-responser">
         <div class="responser-title">参与者</div>
-        <div class="arrange-responser">
-          <span class="head-portait">头像</span>
-          <span class="add-responser"><i class="fa fa-plus-circle fa-1x" aria-hidden="true"></i></span>
+        <div class="arrange-responser responser">
+          <span class="head-portait"></span>
+          <span class="add-responser responser-name"><i class="fa fa-plus-circle fa-1x" aria-hidden="true"></i></span>
         </div>
       </div>
-      <div class="bd-bt more">*** 更多</div>
+      <!--更多按钮点击-->
+      <div  class="bd-bt more"  @click="showmore" v-bind:class="{ 'more-showing' : moreEditing}">
+        <span class="showmore">
+          <i class="el-icon-more"></i>
+          <span>更多</span>
+        </span>
+      </div>
+      <!--点击更多按钮之后显示-->
+      <div class="more-part bd-bt" v-bind:class="{ 'more-showing' : !moreEditing}">
+        <div class="set-deadline bd-bt">
+          <time-setter  @setdeadline="DeadLineset"></time-setter>
+        </div>
+        <div class="set-priority bd-bt">
+          <i class="el-icon-star-on" :style="{color:priorityColor}"></i>
+          <div class="priority">
+            <priority-setter @setpriority="getpriority"></priority-setter>
+          </div>
+        </div>
+      </div>
       <div class="control-btn">
         <!--隐私模式及创建-->
         <div class="private-icon">
@@ -23,17 +41,75 @@
             <i class="fa fa-lock fa-2x" aria-hidden="true" ></i>
             <span class="private">隐私模式</span>
           </span>
-          <div class="submit-btn"><button>创建</button></div>
+          <div class="submit-btn"><button @click.prevent="submittask">创建</button></div>
         </div>
         <div class="private-info">所有成员可见</div>
-
       </div>
     </div>
   </form>
 </template>
 <script>
+  import api from '@/services/user'
+  import Bus from '@/bus'
+  import TimeSetter from '@/components/timesetter.vue'
+  import prioritySetter from '@/components/prioritysetter.vue'
   export default {
-    props: ['isShow']
+    props: ['index', 'info'],
+    components: {TimeSetter, prioritySetter},
+    data () {
+      return {
+        tasktitle: '',
+        taskmember: '',
+        taskpriority: 0,
+        taskcomment: '',
+        taskdeadline: '',
+        ShowState: false,
+        isShow: false,
+        moreEditing: false,
+        priorityColorFlow: ['gray', 'red', 'gold', 'peru'],
+        priorityColor: ''
+      }
+    },
+    methods: {
+      submittask () {
+        const self = this
+        api.addtask({
+          title: self.tasktitle,
+          step: self.index,
+          member: self.info.userName,
+          priority: self.taskpriority,
+          comment: self.taskcomment,
+          deadline: self.taskdeadline
+        })
+          .then(() => {
+            self.isShow = false
+            Bus.$emit('close-edit', self.isShow)
+            self.$emit('updatetask')
+          })
+          .catch((err) => {
+            this.$message.error(err)
+          })
+      },
+      showmore () {
+        this.moreEditing = true
+      },
+      DeadLineset (data) {
+        this.taskdeadline = '2017-09-08'
+        console.log(data)
+        console.log('新的时间')
+      },
+      getpriority (data) {
+        this.taskpriority = data
+        this.priorityColor = this.priorityColorFlow[data]
+      }
+    },
+    created () {
+      Bus.$on('adding-task', (state, index) => {
+        if (this.index === index) {
+          this.isShow = state
+        }
+      })
+    }
   }
 </script>
 <style lang="scss" rel="stylesheet/scss">
@@ -66,15 +142,22 @@
       height:40px;
       line-height: 40px;
       .head-portait {
+        display: inline-block;
         padding-right: 5px;
-        height:inherit;
-        width: 40px;
+        width: 20px;
+        height:40px;
         border-radius: 50%;
-        background: yellow;
+        background: url('../../../static/image/headicon.png') no-repeat;
+        background-size:20px 20px;
+        background-position: center;
       }
-      .responser-name a{
+      .responser-name {
+        display: inline-block;
+        height:40px;
+        line-height: 40px;
         color: #808080;
         font-weight: bolder;
+        vertical-align: top;
         &:hover {
           color: #3da8f5;
           cursor: pointer;
@@ -95,14 +178,41 @@
         .add-responser {
           font-size: inherit;
           color: #3da8f5;
+          .fa-plus-circle {
+            font-size: 23px;
+          }
         }
       }
     }
     .more {
       padding:15px 0px;
+      cursor: pointer;
+      &:hover {
+        color: #3da8f5;
+      }
+    }
+    .more-part {
+      .set-deadline {
+        height:40px;
+        line-height: 40px;
+        display: inline-block;
+        width:100%;
+      }
+      .set-priority {
+        line-height: 40px;
+        height:40px;
+        .priority {
+          display: inline-block;
+          padding-left: 10px;
+          color: darkgray;
+          &:hover {
+            cursor: pointer;
+            color: #3da8f5;
+          }
+        }
+      }
     }
     .control-btn {
-
       padding:10px 0px;
       /*display: flex;*/
       .hover-active {
@@ -139,12 +249,12 @@
         display: inline-block;
         height:25px;
         color: #000;
-
+        cursor: pointer;
         line-height: 40px;
 
         button {
           height: 25px;
-
+          cursor: pointer;
           background: #3da8f5;
           color: white;
           border-radius: 4px;
@@ -158,5 +268,8 @@
   .editpart-show {
     display: block;
     transition: all .4s ease;
+  }
+  .more-showing {
+    display: none;
   }
 </style>
