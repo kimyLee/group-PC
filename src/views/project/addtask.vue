@@ -5,16 +5,23 @@
   </div>
 </template>
 <script>
+  import Bus from '@/bus'
   export default {
+    props: ['index'],
     data () {
       return {
         isAdding: false
       }
     },
+    created () {
+      Bus.$on('close-edit', (state) => {
+        this.isAdding = state
+      })
+    },
     methods: {
       addtask () {
         this.isAdding = true
-        console.log('33')
+        Bus.$emit('adding-task', this.isAdding, this.index)
         this.$emit('addtask')
       }
     }

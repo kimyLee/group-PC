@@ -1,15 +1,22 @@
 <template>
 <div class="homepage">
   <div class="headerpart">
-    <span class="title">Kimmy和Kath的装逼之路</span>
-    <router-link to="/login" class="login">登陆</router-link>
+    <span class="title">Katherine和kimmy的装逼之路</span>
+    <router-link to="/login" class="login">登录</router-link>
     <router-link to="/signup" class="signup">免费注册</router-link>
   </div>
 </div>
 </template>
 <script>
+  // import user from '../services/user.js'
   export default {
-
+    mounted () {
+      // todo: 这里应该是无意义的？ 确认没用后应该删掉这段代码
+      /* user.getuserinfo()
+        .then((data) => {
+          console.log(data)
+        }) */
+    }
   }
 </script>
 <style lang="scss" rel="stylesheet/scss">

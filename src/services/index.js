@@ -4,12 +4,12 @@
  */
 import axios from 'axios'
 // todo: 开发服上这样配，做映射，打包上线可能删掉
-const domain = location.host.indexOf('localhost') >= 0 ? '/api' : 'http://localhost:3000'
+const domain = location.host.indexOf('localhost') >= 0 ? '/api' : ''
 
 // 统一处理
 function handleAll (data) {
-  if (!data.data || data.data.ret) {
-    let errorCode = data.data ? (data.data.msg || '网络错误') : '网络错误'
+  if (!data.data.success) {
+    let errorCode = data.data ? (data.data.message || '网络错误') : '网络错误'
     errorCode = typeof errorCode === 'object' ? '网络错误，请检查服务器' : errorCode
     // alert(errorCode)
     return Promise.reject(errorCode)

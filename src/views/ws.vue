@@ -31,18 +31,15 @@
 
         this.ws = new WebSocket('ws://localhost:3001/test')
         this.ws.onmessage = (msg) => {
-          this.msg.push(msg.data)
+          let message = JSON.parse(msg.data)
+          this.msg.push(`${message.user.name}: ${message.data}`)
           var options = {
-            dir: 'ltr',
-            lang: 'utf-8',
-            icon: 'http://ihuster.com/static/avatar/m_default.png',
-            body: '你好呀，欢迎留言交流呀'
+            icon: '/static/image/headicon.png',
+            body: message.data
           }
           if (Notification && Notification.permission === 'granted') {
-            options.data = msg.data
-            var n = new Notification(msg.data, options)
+            var n = new Notification(message.user.name, options)
             n.onshow = function () {
-              console.log('tgdg')
             }
           }
         }
