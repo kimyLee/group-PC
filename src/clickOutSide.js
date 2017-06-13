@@ -9,7 +9,7 @@ export default function (Vue) {
       myNode[i].handlerfn(e, myNode[i])
     }
   })
-  Vue.directive('clickoutside', {
+  Vue.directive('myclickoutside', {
     bind (el, binding, vnode) {
       // id 这里用长度加随机数，防止删除了一些组件后，再次生成的id重复
       el.id = myNode.push(el) - 1 + Math.round(Math.random() * 100).toString()

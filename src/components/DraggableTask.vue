@@ -2,12 +2,12 @@
   <div class="draggable">
     <div class="task-title">
       <span class="title"> {{taskflow[index]}}</span>
-      <span class="title">· {{task.length}}</span>
+      <span class="title">· {{task.length}}{{index}}</span>
     </div>
     <!--项目任务模块-->
     <div class="draggable-part"  ref="DraggablePart">
       <draggable :options="options" v-model="task.cards"  style="height: 100%;">
-        <div v-for="taskcard in task" :id="taskcard.id">
+        <div v-for="taskcard in task" :id="taskcard.id" class="my-item">
           <div  class="card">
             <div class="hover-mask"></div>
             <!--任务紧急程度icon模块-->
@@ -19,12 +19,12 @@
                 <span class="head-portrait">{{taskcard.creator}}</span>
               </div>
               <!--截止日期模块-->
-            <div class="task-deadline">{{taskcard.deadline}}截止</div>
+            <div class="task-deadline"><span class="deadline">{{taskcard.deadline}}截止</span></div>
               <!--任务信息（开发人员任务状态模块）-->
-            <div class="task-info">
-              <span class="responser"><i class="tab-label"></i>{{taskcard.member}}</span>
-              <span class="status">{{taskcard.stepname}}</span>
-            </div>
+            <!--<div class="task-info">-->
+              <!--<span class="responser"><i class="tab-label"></i>{{taskcard.member}}</span>-->
+              <!--<span class="status">{{taskcard.stepname}}</span>-->
+            <!--</div>-->
           </div>
         </div>
         </div>
@@ -48,6 +48,7 @@
         options: {
           group: 'task',
           animation: 100,
+          draggable: '.my-item',
           forceFallback: true
         },
         checked: false
@@ -81,6 +82,7 @@
     background-color: #f1f1f1;
     border-radius: 5px;
     box-sizing: border-box;
+    position: relative;
     .task-title {
       padding: 10px;
       font-weight: bolder;

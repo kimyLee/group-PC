@@ -6,8 +6,8 @@
       v-model="deadline"
       type="datetime"
       disable=true
-      format="MM-dd"
-      placeholder="设置截止时间" @change="settime()">
+      format="yyyy-MM-dd"
+      placeholder="设置截止时间" @change="settime">
     </el-date-picker>
   </div>
 </div>
@@ -20,8 +20,9 @@
       }
     },
     methods: {
-      settime () {
-        this.$emit('setdeadline', this.deadline)
+      settime (val) {
+        this.$emit('setdeadline', val)
+        console.log(val)
       }
     },
     mounted () {

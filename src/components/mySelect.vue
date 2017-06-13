@@ -1,5 +1,5 @@
 <template>
-  <div class="hello" v-clickoutside="toggle">
+  <div class="hello" v-myclickoutside="toggle">
     <button @click="toggle">按钮{{id}}</button>
     <div style="width: 200px;height: 200px;background-color: #ccc;" v-show="show">
       我来测试{{id}}

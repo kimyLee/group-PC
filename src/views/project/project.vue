@@ -11,8 +11,8 @@
         <!--helloword-->
       <!--</div>-->
     <!--</right-side>-->
-    <div class="task-part">
-      <draggable-task v-for="(task,index) in tasks" :task="task" :index="index"
+    <div class="task-part" v-loading="loading">
+      <draggable-task v-for="(task, index) in tasks" :task="task" :index="index"
                       @updatetask="gettask"  :taskflow="taskflow" :info="info"></draggable-task>
       <div>点击这里可以实现添加任务模块</div>
     </div>
@@ -30,6 +30,7 @@
     props: ['info'],
     data () {
       return {
+        loading: false,
         isOpen: false,   // 是否打开侧边栏
         tasks: null,  // 从后台获取到的任务
         taskflow: {}
@@ -43,21 +44,28 @@
       },
       gettask () {
         const self = this
-        api.gettask()
-          .then((data) => {
-            self.tasks = data.data
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        this.loading = true
         api.getflow()
           .then((data) => {
+            setTimeout(() => {
+              this.loading = false
+            }, 2000)
             //  这里貌似有点问题 就是这里是用data.data才能获取到数据
-            for (var i = 0; i < data.data.length; i++) {
+            let len = data.data.length
+//            for (let i = data.data.length; i--;) {
+//
+//            }
+            for (var i = 0; i < len; i++) {
               self.taskflow[data.data[i].step] = data.data[i].stepname
             }
-            console.log(self.taskflow)
-            console.log(self.taskflow['0'])
+            api.gettask()
+              .then((data) => {
+                console.log(data.data)
+                self.tasks = data.data
+              })
+              .catch((err) => {
+                console.log(err)
+              })
           })
       }
     },

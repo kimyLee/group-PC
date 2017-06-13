@@ -58,9 +58,9 @@
     components: {TimeSetter, prioritySetter},
     data () {
       return {
-        tasktitle: '',
-        taskmember: '',
-        taskpriority: 0,
+        tasktitle: '', // 任务标题
+        taskmember: '', // 任务成员
+        taskpriority: 0, // 优先级 0：不紧急 1： 正常
         taskcomment: '',
         taskdeadline: '',
         ShowState: false,
@@ -94,7 +94,7 @@
         this.moreEditing = true
       },
       DeadLineset (data) {
-        this.taskdeadline = '2017-09-08'
+        this.taskdeadline = data
         console.log(data)
         console.log('新的时间')
       },

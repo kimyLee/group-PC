@@ -14,6 +14,7 @@ function handleAll (data) {
     // alert(errorCode)
     return Promise.reject(errorCode)
   }
+  console.log(data, 888)
   return Promise.resolve(data.data)
 }
 

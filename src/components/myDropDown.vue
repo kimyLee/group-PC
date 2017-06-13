@@ -1,6 +1,6 @@
 <!--@slide 关闭收起回调， 其他事件在li 中自定义-->
 <template>
-  <div class="my-drag" v-clickoutside="close" @click="toggle()">
+  <div class="my-drag" v-myclickoutside="close" @click="toggle()">
     <div class="drag-btn">
       <slot name="header"></slot>
     </div>
