@@ -29,6 +29,7 @@
         </div>
         </div>
         <!--任务编辑模块-->
+        <my-add-task  @addtask="Showeditorscroll" :index="index" :info="info" @updatetask="updatetask"></my-add-task>
         <task-editor :index="index" @updatetask="updatetask" :info="info"></task-editor>
       </draggable>
     </div>
@@ -40,8 +41,10 @@
 //  import api from '@/services/user'
   import draggable from 'vuedraggable'
   import addTask from '@/views/project/addtask.vue'
+  import myAddTask from '@/views/project/kimmyAddTask.vue'
   import taskEditor from '@/views/project/taskEditor.vue'
   export default {
+    // 任务项  任务下标  任务流程  用户信息
     props: ['task', 'index', 'taskflow', 'info'],
     data () {
       return {
@@ -56,18 +59,19 @@
     },
     components: {
       draggable,
+      myAddTask,
       addTask,
       taskEditor
     },
     methods: {
-//      实现添加任务的时候滚动条自动滚动效果
+      // 实现添加任务的时候滚动条自动滚动效果
+      // todo: 姐姐， 驼峰式命名应该是 showEditorScroll
       Showeditorscroll: function () {
-        const self = this
         this.$nextTick(() => {
           var DraggablePart = this.$refs.DraggablePart
           DraggablePart.scrollTop = DraggablePart.scrollHeight
         })
-        console.log(self.index)
+        // console.log(self.index)
       },
       updatetask () {
         this.$emit('updatetask')

@@ -1,6 +1,7 @@
 <template>
   <div>
   <div v-if="!isTurn" class="signupPart">
+    <!--之所以注册页按enter 能触发turnto 事件，是因为form事件，可以查查原理 -->
     <form action="" class="login">
       <h1 class="title">teambition</h1>
       <div class="form-field">
@@ -59,6 +60,7 @@
       }
     },
     methods: {
+      /** 和登录一样，如果只是一个语句，可以直接写在模板 isShow = true **/
       show () {
         this.isShow = true
       },
@@ -69,7 +71,6 @@
         this.isTurn = true
       },
       signup () {
-        console.log(this.confirmpassword === this.password, 233)
         api.register({
           userName: this.username,
           password: this.password,
@@ -86,7 +87,7 @@
                 this.$emit('getinfo', {
                   userName: this.username
                 })
-                console.log(data)
+                // console.log(data)
                 this.$router.push({path: '/project'})
               })
               .catch((err) => {

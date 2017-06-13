@@ -1,37 +1,42 @@
 <template>
-  <div class="loginPart">
+  <!--支持enter触发登录事件  @keyup.enter="login" 聚焦时候有效-->
+  <div class="loginPart" @keyup.enter="login">
     <div class="login">
       <h1 class="title">teambition</h1>
+      <!--邮箱-->
       <div class="form-field">
         <input class="form-part email" type="text" name="email" placeholder="邮箱/手机号" v-model="userName">
         <i class="icon close fa fa-times-circle" aria-hidden="true" style="right: 12px;"></i>
       </div>
+      <!--密码-->
       <div class="form-field">
         <input type="password" class="form-part password"  name="password" placeholder="密码" v-model="password">
         <i class="icon close fa fa-times-circle" aria-hidden="true" style="right: 35px;"></i>
         <i class="icon eye fa fa-eye" aria-hidden="true" style="right: 12px;"></i>
         <i class="icon eye fa fa-eye-slash" aria-hidden="true" style="right: 12px;display: none"></i>
       </div>
-      <div class="form-field" @mouseover="show" @mouseout="unshow">
-        <button class="form-part submit" type="submit" @click="login">登 录<i v-bind:class="{show:isShow}"
-                                                                            style="display: none;"
-                                                                            class="fa fa-arrow-circle-right"
-                                                                            aria-hidden="true"></i></button>
+      <div class="form-field" @mouseover="isShow = true" @mouseout="isShow = false">
+        <button class="form-part submit" type="submit" @click="login">登 录
+          <i v-bind:class="{show:isShow}" style="display: none;" class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
+  /** 如果编辑器注释经常莫名其妙的出现错，但实际格式是对的，可以编译，把 ↑ 上面type改成babel 或 ecmascript-6 **/
   import api from '@/services/user.js'
+
   export default {
     data () {
       return {
-        isShow: false,
+        isShow: false, // 是否显示按钮箭头样式
         userName: '',
         password: ''
       }
     },
     methods: {
+      // todo: 如果show 和 unshow 方法只在一个地方调用一次，并且每个方法只是一个语句，可以直接在模板里面 isShow = true 如上
       show () {
         this.isShow = true
       },
@@ -45,6 +50,7 @@
         })
           .then((data) => {
             this.$message('登陆成功')
+            // 成功后将用户信息派发给父组件，并跳转项目主页
             this.$emit('getinfo', {
               userName: this.userName
             })

@@ -4,6 +4,7 @@ import home from '@/views/home.vue'
 import project from '@/views/project/project.vue'
 import login from '@/views/login.vue'
 import signup from '@/views/signup.vue'
+import ws from '@/views/ws.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +29,11 @@ export default new Router({
       path: '/project',
       name: 'project',
       component: project
+    },
+    {
+      path: '/ws',
+      name: 'ws',
+      component: ws
     }
   ]
 })

@@ -1,6 +1,4 @@
-/**
- * Created by katherine on 2017/6/4.
- */
+
 import xhr from './index'
 
 export default {
@@ -12,4 +10,3 @@ export default {
   getflow: xhr.get.bind(null, '/api/task/getFlow'),
   addtask: xhr.post.bind(null, '/api/task/addTask')
 }
-
